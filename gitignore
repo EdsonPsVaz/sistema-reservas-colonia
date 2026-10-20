@@ -1,0 +1,22 @@
+# Dados (nunca enviar)
+*.db
+*.dbf
+*.DBF
+backups/
+*.csv
+*.xlsx
+duplicados.txt
+
+# Configuração local
+masters.json
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Fichas geradas
+fichas/
+*.pdf

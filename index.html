@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Colônia de Férias</title>
+<link rel="icon" href="/logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--pinho:#0f4a33;--folha:#2f7d57;--nevoa:#eaf1ec;--sol:#e8a317;--solfundo:#fff7e0;--tinta:#17261f;--cinza:#66756c;--linha:#dbe4dd}
+*{box-sizing:border-box}
+body{font:15px/1.5 "Segoe UI",system-ui,sans-serif;margin:0;background:var(--nevoa);color:var(--tinta)}
+h1,h2,h3,h4{font-family:Georgia,"Times New Roman",serif;color:var(--pinho);margin:0 0 10px;font-weight:700}
+h1{font-size:34px;line-height:1.15}h3{font-size:20px}h4{font-size:17px}
+header{background:var(--pinho);color:#fff;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 28px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:44px;height:44px;border-radius:10px;border:2px solid #ffffff66}
+.brand b{font:700 20px Georgia,serif;display:block;line-height:1.1}.brand small{opacity:.75}
+#barra{display:flex;align-items:center;gap:14px;flex-wrap:wrap}#barra[hidden]{display:none}
+nav{display:flex;gap:4px}
+nav button{background:none;color:#fff;border:0;border-bottom:3px solid transparent;padding:10px 14px;cursor:pointer;font:inherit;font-weight:600;opacity:.8}
+nav button:hover{opacity:1}nav button.on{opacity:1;border-bottom-color:var(--sol)}
+.user{opacity:.85;font-size:14px}
+button.sair{background:none;border:1.5px solid #ffffff88;color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;font:inherit}
+button.sair:hover{background:#ffffff22}
+main{max-width:1040px;margin:28px auto;padding:0 16px}
+.card{background:#fff;border:1px solid var(--linha);border-radius:10px;padding:20px 22px;margin-bottom:16px;overflow-x:auto}
+input,select,textarea{padding:9px 11px;border:1.5px solid #c9d5cc;border-radius:8px;font:inherit;background:#fff;color:var(--tinta)}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--folha);box-shadow:0 0 0 3px #2f7d5733}
+input:disabled,select:disabled,textarea:disabled{background:#f3f6f4;color:var(--tinta)}
+button:focus-visible{outline:3px solid var(--sol);outline-offset:2px}
+button.b{background:var(--pinho);color:#fff;border:0;padding:10px 20px;border-radius:8px;cursor:pointer;font:inherit;font-weight:600}
+button.b:hover{background:var(--folha)}
+button.c{background:#fff;border:1.5px solid #c9d5cc;padding:7px 12px;border-radius:8px;cursor:pointer;font:inherit;color:var(--tinta)}
+button.c:hover{border-color:var(--folha);color:var(--folha)}
+.hero{padding:34px 30px;border-left:6px solid var(--sol)}
+.hero p{color:var(--cinza);margin:0 0 20px;max-width:46ch}
+.busca{display:flex;gap:10px;max-width:620px}.busca input{flex:1;font-size:18px;padding:13px 16px}
+.erro{color:#b00020;min-height:1.5em;margin:10px 0 4px;font-weight:600}
+button.mes{font:600 17px Georgia,serif;padding:12px 26px;margin:4px 6px 4px 0;border:2px solid var(--pinho);background:#fff;color:var(--pinho);border-radius:8px;cursor:pointer}
+button.mes:hover{background:var(--nevoa)}button.mes.on{background:var(--pinho);color:#fff}
+table{width:100%;border-collapse:collapse}
+th{font-size:13px;font-weight:600;color:var(--cinza);text-align:left;padding:8px 6px;border-bottom:2px solid var(--linha)}
+td{padding:7px 6px;border-bottom:1px solid var(--linha)}
+.sem{display:inline-block;border:2px solid var(--linha);border-radius:12px;padding:14px 16px;margin:5px 8px 5px 0;cursor:pointer;min-width:180px;vertical-align:top;background:#fff}
+.sem:hover{border-color:var(--folha)}.sem.on{border-color:var(--pinho);background:var(--nevoa)}
+.sem b{font:700 16px Georgia,serif;display:block}.sem strong{display:block;margin:2px 0}
+.badge{display:inline-block;font-size:12.5px;font-weight:600;padding:2px 10px;border-radius:999px;margin-top:6px}
+.badge.ok{background:#d8efe1;color:#0d5a33}.badge.meio{background:#fdeccb;color:#80520a}
+.tag{font-size:12.5px;color:#a35f00;font-weight:600;display:block}
+.aname{font:700 22px Georgia,serif;color:var(--pinho);margin-bottom:12px}
+.grupos{display:grid;grid-template-columns:repeat(3,1fr)}
+.grp{padding:0 20px;border-left:2px solid var(--linha)}.grp:first-child{padding-left:0;border-left:0}
+.grp h5{margin:0 0 6px;font-size:13px;color:var(--folha);font-weight:700}
+.dado{display:flex;gap:10px;margin:2px 0;overflow-wrap:anywhere}
+.dado b{flex:none;width:76px;font-size:13px;color:var(--cinza);font-weight:600}
+.fform{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pern{font-weight:600}.pern label{font-weight:400;margin-left:8px}
+.prev{color:var(--pinho);margin:10px 0}
+.totais{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding:14px 4px 0;border-top:2px solid var(--pinho)}
+.tot{text-align:right}.pagopt{margin-top:8px}.pagopt label{margin-right:14px}
+#total{font:700 32px Georgia,serif;color:var(--pinho);margin-left:10px}
+#parc{font-weight:600;color:var(--pinho)}
+.pgto{margin-top:16px;background:var(--solfundo);border:2px dashed var(--sol);border-radius:10px;padding:12px 16px}
+.pgto h4{margin-bottom:8px;font-size:15px;color:#6b4700}
+.pixlinha{margin:0 0 8px;font-size:16px}
+.pix{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:6px}
+.pix small{display:block;font-size:12px;color:var(--cinza)}.pix b{font-size:15px}.pix a{color:var(--pinho);text-decoration:none}
+.pgto ul{margin:0;padding-left:20px;font-size:14px}.pgto li{margin:2px 0;font-weight:600}
+.so-imp{display:none}
+.comum .m-only{display:none!important}
+.ro .edit{display:none!important}
+@media(max-width:700px){header{padding:10px 14px}.hero{padding:22px 18px}.busca{flex-direction:column}.grupos{grid-template-columns:1fr}.grp{border-left:0;padding:8px 0}}
+@media print{
+ @page{size:A4;margin:10mm}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ header,.nao-imp{display:none!important}
+ body{background:#fff;font-size:11px;line-height:1.35}
+ .card{border:0;padding:2px 0;margin-bottom:4px;overflow:visible}
+ input,select,textarea{border:0!important;box-shadow:none!important;appearance:none;padding:2px;background:none!important}
+ .so-imp.cab{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--pinho);padding-bottom:8px;margin-bottom:12px}
+ .cab-t{font:700 24px Georgia,serif;color:var(--pinho)}
+ .vazio{display:none}
+ td,th{padding:3px 4px}
+ .aname{font-size:17px;margin-bottom:4px}.grp h5{font-size:11px;margin-bottom:2px}.dado b{font-size:11px}
+ .badge{font-size:11px;padding:1px 8px;margin-top:3px}
+ .totais{margin-top:6px;padding-top:6px}#total{font-size:22px}
+ .pgto{break-inside:avoid;margin-top:8px;padding:8px 12px}
+ .pgto h4{font-size:13px;margin-bottom:4px}.pixlinha{font-size:13px;margin-bottom:4px}
+ .pix{gap:20px;margin-bottom:4px}.pix b{font-size:12px}.pix small{font-size:10px}
+ .pgto ul{font-size:10.5px}.pgto li{margin:1px 0}
+}
+
+.dicas{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:12px;width:min(350px,calc(100vw - 36px));z-index:20}
+.dica{position:relative;background:#fff;border:1px solid var(--linha);border-left:5px solid var(--folha);border-radius:12px;padding:12px 36px 12px 14px;box-shadow:0 8px 24px rgba(15,74,51,.18);font-size:14px}
+.dica.dev{border-left-color:var(--sol);background:var(--solfundo)}
+.dica .t{display:block;font-family:Georgia,serif;color:var(--pinho);font-size:15px;margin-bottom:4px}
+.dica p{margin:0 0 6px}
+.dica .x{position:absolute;top:6px;right:8px;background:none;border:0;font-size:22px;line-height:1;color:var(--cinza);cursor:pointer}
+.cpfs{display:flex;flex-wrap:wrap;gap:6px}
+.cpfs button{font:inherit;font-size:13px;background:var(--nevoa);border:1px solid var(--linha);border-radius:999px;padding:2px 10px;cursor:pointer;color:var(--pinho)}
+.cpfs button:hover{background:var(--folha);color:#fff}
+@media print{.dicas{display:none}}
+</style></head><body>
+<header>
+ <div class="brand"><img src="/logo.png" alt="Logo"><div><b>Colônia de Férias</b><small id="subtit"></small></div></div>
+ <div id="barra" hidden>
+  <nav>
+   <button id="n-busca" onclick="novaReserva()">Nova reserva</button>
+   <button id="n-lista" class="m-only" onclick="lista()">Fichas</button>
+   <button id="n-config" class="m-only" onclick="mostra('config')">Configuração</button>
+  </nav>
+  <span class="user" id="quem"></span><button class="sair" onclick="sair()">Sair</button>
+ </div>
+</header>
+<main>
+<section id="v-login">
+ <div class="card hero"><h1>Nova reserva</h1>
+  <p>Para começar, informe o seu CPF.</p>
+  <div class="busca"><input id="lcpf" inputmode="numeric" placeholder="000.000.000-00" autocomplete="off" oninput="mascaraCpf(this)" onkeydown="if(event.key=='Enter')entrar()">
+  <button class="b" onclick="entrar()">Entrar</button></div>
+  <p id="loginerr" class="erro"></p>
+  <small>O CPF é usado apenas para identificar a sua ficha.</small></div>
+
+ <div class="dicas">
+  <div class="dica" role="note"><button class="x" aria-label="Fechar aviso" onclick="this.parentElement.remove()">&times;</button>
+   <b class="t">Ambiente de demonstração</b>
+   <p>Os dados aqui são fictícios. Para testar como usuário, clique em um destes CPFs:</p>
+   <div class="cpfs">
+    <button onclick="preencher('64956545453')">649.565.454-53</button>
+    <button onclick="preencher('35762725694')">357.627.256-94</button>
+    <button onclick="preencher('52650893908')">526.508.939-08</button>
+   </div></div>
+  <div class="dica dev" role="note"><button class="x" aria-label="Fechar aviso" onclick="this.parentElement.remove()">&times;</button>
+   <b class="t">Nota do DEV</b>
+   <p>Para acesso de administrador, use o CPF:</p>
+   <div class="cpfs">
+    <button onclick="preencher('11111111111')">111.111.111-11</button>
+    <button onclick="preencher('00000000000')">000.000.000-00</button>
+   </div></div>
+ </div>
+</section>
+
+<section id="v-busca" hidden>
+ <div class="card hero"><h1>Nova reserva</h1>
+  <p>Informe o CPF, o RG ou o nome do associado responsável pela ficha.</p>
+  <div class="busca"><input id="q" placeholder="CPF, RG ou nome" autocomplete="off" onkeydown="if(event.key=='Enter')buscar()">
+  <button class="b" onclick="buscar()">Buscar associado</button></div></div>
+ <div id="res"></div>
+</section>
+
+<section id="v-datas" hidden>
+ <div class="card"><h3 id="tResp">Responsável pela ficha</h3><div id="assoc"></div></div>
+ <div class="card"><b id="tAnt">Fichas deste associado:</b><div id="antigas"></div></div>
+ <div class="card"><h3>Escolha o mês</h3><div id="meses"></div><div id="semanas" style="margin-top:10px"></div></div>
+</section>
+
+<section id="v-ficha" hidden>
+ <div class="so-imp cab"><div style="display:flex;align-items:center;gap:12px"><img src="/logo.png" alt="" style="height:56px"><div><div class="cab-t" id="cabEnt"></div><div id="cabTemp"></div></div></div><div style="text-align:right"><b id="cabNum"></b><div id="cabData"></div></div></div>
+ <div class="card"><h3 id="titulo"></h3><div id="assoc2"></div>
+  <p><b>Semana:</b> <span id="semtxt"></span> <button class="c nao-imp edit" onclick="trocar()">Trocar semana</button></p><div id="refeicao"></div></div>
+ <div class="card nao-imp edit"><h4>Adicionar pessoa à ficha</h4>
+  <div class="fform">
+  <input id="fn" placeholder="Nome completo" size="34" onkeydown="if(event.key=='Enter')adicionar()">
+  <input id="fi" type="number" min="0" max="120" placeholder="Idade" style="width:80px" onkeydown="if(event.key=='Enter')adicionar()">
+  <select id="ft" onchange="previa()"></select>
+  <span class="pern">Pernoite<span id="fplbl"></span>: <label><input type="radio" name="fp" value="0" checked onchange="previa()"> Não</label> <label><input type="radio" name="fp" value="1" onchange="previa()"> Sim</label></span>
+  </div>
+  <p id="prev" class="prev"></p>
+  <button class="b" onclick="adicionar()">Adicionar à ficha</button>
+  <button class="c" onclick="doAssociado()">Preencher com o associado</button></div>
+ <div class="card">
+  <table><thead><tr><th>Nome</th><th>Idade</th><th>Tipo de reserva</th><th>Pernoite</th><th>Valor/diária</th><th>Total</th><th class="nao-imp edit"></th></tr></thead>
+  <tbody id="linhas"></tbody></table>
+  <small class="nao-imp m-only">Campo amarelo = valor alterado à mão. ↺ volta ao valor da tabela.</small>
+  <p id="obsw">Observação:<br><textarea id="obs" rows="2" style="width:100%" oninput="recalc()"></textarea></p>
+  <div class="totais"><div><div id="sub"></div>
+   <div class="nao-imp pagopt">Forma de pagamento: <label><input type="radio" name="par" value="1" checked onchange="recalc()"> Tudo em 1x</label> <label><input type="radio" name="par" value="2" onchange="recalc()"> Dividido em 2x</label></div></div>
+   <div class="tot"><div>Total <span id="total"></span></div><div id="parc"></div></div></div>
+  <div id="pgto" class="pgto"></div>
+  <p class="nao-imp"><button class="b edit" onclick="salvar()">Salvar ficha</button>
+   <button class="c" onclick="window.print()">Imprimir</button>
+   <button class="c m-only" onclick="excluir()">Excluir ficha</button></p>
+ </div>
+</section>
+
+<section id="v-lista" hidden>
+ <div class="card"><h3>Resumo por semana</h3><div id="resumo"></div></div>
+ <div class="card"><h3>Todas as fichas</h3>
+  <p><button class="c" onclick="exportar()">Exportar todas (Excel/CSV)</button></p><div id="todas"></div></div>
+</section>
+
+<section id="v-config" hidden>
+ <div class="card"><h3>Tipos de reserva e valores</h3>
+  <small>Valor por diária nas semanas de 100%. Nas semanas com % menor, o sistema aplica a porcentagem. O pernoite é um valor único por pessoa.</small>
+  <table><thead><tr><th>Tipo</th><th>Valor/diária</th><th>Pernoite (valor único)</th><th>Categoria do pernoite</th><th></th></tr></thead><tbody id="cfgtipos"></tbody></table>
+  <p><button class="c" onclick="addTipo()">+ tipo</button></p>
+  <label>Temporada <input id="c_temporada" style="width:120px"></label></div>
+ <div class="card"><h3>Entidade e pagamento</h3>
+  <label>Nome da entidade<br><input id="c_entidade" style="width:260px"></label>
+  <label style="margin-left:12px">Chave Pix<br><input id="c_pix" style="width:260px"></label>
+  <label style="margin-left:12px">WhatsApp<br><input id="c_whatsapp" style="width:200px"></label>
+  <label style="margin-left:12px">Banco<br><input id="c_banco" style="width:170px"></label>
+  <label style="margin-left:12px">Agência<br><input id="c_agencia" style="width:110px"></label>
+  <label style="margin-left:12px">Conta<br><input id="c_conta" style="width:110px"></label>
+  <p><label>Regras de pagamento (uma por linha)<br><textarea id="c_regras" rows="5" style="width:100%"></textarea></label></p>
+  <small>Os administradores (masters) ficam no arquivo masters.json, na pasta do sistema.</small></div>
+ <div class="card"><h3>Semanas</h3>
+  <table><thead><tr><th>Mês</th><th>Nome</th><th>Início</th><th>Fim</th><th>Diárias</th><th>% do valor</th><th>Obs.</th><th></th></tr></thead>
+  <tbody id="cfgsem"></tbody></table>
+  <p><button class="c" onclick="addSem()">+ semana</button></p></div>
+ <p><button class="b" onclick="salvaCfg()">Salvar configuração</button></p>
+</section>
+</main>
+
+<script>
+let cfg={},semanas=[],tipos=[],assoc=null,ficha=null,mes=null,me=null,token=null;
+const MESES=['DEZEMBRO','JANEIRO','FEVEREIRO','MARÇO'];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const brl=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const cap=m=>m.charAt(0)+m.slice(1).toLowerCase();
+const r2=v=>Math.round((+v||0)*100)/100;
+const dm=i=>i?i.slice(8,10)+'/'+i.slice(5,7):'';
+const dmy=i=>i?dm(i)+'/'+i.slice(0,4):'';
+const isMaster=()=>!!me&&me.role==='master';
+const ro=()=>!isMaster()&&!!ficha&&!!ficha.id;
+async function api(u,b){
+ const h={};if(token)h['X-Token']=token;if(b)h['Content-Type']='application/json';
+ const r=await fetch(u,b?{method:'POST',headers:h,body:JSON.stringify(b)}:{headers:h});
+ const j=await r.json();
+ if(r.status===401&&token){voltaLogin(j.erro);throw new Error('')}
+ if(!r.ok)throw new Error(j.erro||'Erro');return j;
+}
+window.addEventListener('unhandledrejection',e=>{const m=e.reason&&e.reason.message;if(m)alert(m)});
+function mostra(v){
+ if(['busca','lista','config'].includes(v)&&!isMaster())return;
+ ['login','busca','datas','ficha','lista','config'].forEach(x=>{$('v-'+x).hidden=x!==v;const n=$('n-'+x);if(n)n.classList.toggle('on',x===v)});
+}
+
+/* ---------- login ---------- */
+function preencher(cpf){const el=$('lcpf');el.value=cpf;mascaraCpf(el);el.focus()}
+function mascaraCpf(el){let d=el.value.replace(/\D/g,'').slice(0,11);el.value=d.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2')}
+async function entrar(){
+ $('loginerr').textContent='';
+ try{
+  const r=await api('/api/login',{cpf:$('lcpf').value});
+  token=r.token;me=r;await carrega();
+  document.body.classList.toggle('comum',r.role!=='master');
+  $('quem').textContent=r.nome;$('barra').hidden=false;$('lcpf').value='';
+  if(isMaster()){mostra('busca');$('q').focus()}else await abrir(r.assoc_id);
+ }catch(e){token=null;me=null;$('loginerr').textContent=e.message}
+}
+function voltaLogin(msg){
+ token=null;me=null;assoc=null;ficha=null;mes=null;
+ document.body.classList.remove('comum','ro');$('barra').hidden=true;$('res').innerHTML='';
+ $('loginerr').textContent=msg||'';mostra('login');
+}
+async function sair(){try{await api('/api/logout',{})}catch(e){}voltaLogin()}
+function novaReserva(){if(isMaster()){mostra('busca');$('q').focus()}else abrir(me.assoc_id)}
+
+/* ---------- busca (só administradores) ---------- */
+async function buscar(){
+ const q=$('q').value.trim();if(!q)return;
+ const r=await api('/api/buscar?q='+encodeURIComponent(q));
+ if(r.length==1)return abrir(r[0].id);
+ $('res').innerHTML=r.length?r.map(a=>`<div class="card"><b>${esc(a.nome)}</b> — RG ${esc(a.rg)} · CPF ${esc(a.cpf)} <button class="b" onclick="abrir(${a.id})">Abrir</button></div>`).join(''):'<p>Ninguém encontrado.</p>';
+}
+function pintaAntigas(fs){$('antigas').innerHTML=fs.map(f=>`<div>Ficha nº ${f.id} — ${esc(f.semana_nome)} — ${brl(f.total)} <button class="c" onclick="abrirFicha(${f.id})">Abrir</button></div>`).join('')||'<i>Nenhuma ficha ainda.</i>'}
+async function abrir(id){
+ const r=await api('/api/associado?id='+id);assoc=r.associado;const a=assoc;
+ const cpf=a.cpf&&a.cpf.length==11?a.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4'):a.cpf;
+ const g=(t,l)=>{const it=l.filter(x=>x[1]);return it.length?`<div class="grp"><h5>${t}</h5>${it.map(x=>`<div class="dado"><b>${x[0]}</b><span>${esc(x[1])}</span></div>`).join('')}</div>`:''};
+ const h=`<div class="aname">${esc(a.nome)}</div><div class="grupos">${g('Identificação',[['RG',a.rg],['CPF',cpf],['Nascimento',dmy(a.nascimento)]])}${g('Contato',[['Telefone',a.telefone],['Celular',a.celular],['E-mail',a.email]])}${g('Endereço',[['Endereço',a.endereco],['Bairro',a.bairro],['CEP',a.cep],['UF',a.uf]])}</div>`;
+ $('assoc').innerHTML=h;$('assoc2').innerHTML=h;pintaAntigas(r.fichas);
+ $('tResp').textContent=isMaster()?'Responsável pela ficha':'Sua reserva';
+ $('tAnt').textContent=isMaster()?'Fichas deste associado:':'Suas fichas:';
+ ficha={id:null,semana:null,observacao:'',parcelas:1,pessoas:[]};mes=null;
+ datas();aplicaModo();mostra('datas');
+}
+async function abrirFicha(id){
+ const f=await api('/api/ficha?id='+id);
+ if(!assoc||assoc.id!==f.associado_id)await abrir(f.associado_id);
+ ficha=f;const s=semanas.find(x=>x.nome===f.semana.nome&&x.inicio===f.semana.inicio);mes=s?s.mes:null;
+ datas();render();mostra('ficha');
+}
+
+/* ---------- datas ---------- */
+function datas(){
+ $('meses').innerHTML=MESES.map(m=>`<button class="mes ${m===mes?'on':''}" onclick="escolheMes('${m}')">${cap(m)}</button>`).join('');
+ const l=semanas.map((s,i)=>[s,i]).filter(([s])=>s.mes===mes),cur=ficha&&ficha.semana;
+ $('semanas').innerHTML=!mes?'<p>Clique em um mês para ver as semanas.</p>':l.length?l.map(([s,i])=>`<div class="sem ${cur&&cur.nome===s.nome&&cur.inicio===s.inicio?'on':''}" onclick="escolher(${i})"><b>${esc(s.nome)}</b><strong>${dm(s.inicio)} à ${dm(s.fim)}</strong>${s.diarias} diárias<br><span class="badge ${+s.percentual>=100?'ok':'meio'}">${s.percentual}%${+s.percentual>=100?' com refeições':''}</span><span class="tag">${esc(s.obs)}</span></div>`).join(''):'<p>Nenhuma semana cadastrada neste mês.</p>';
+}
+function escolheMes(m){mes=m;datas()}
+function trocar(){datas();mostra('datas')}
+function escolher(i){ficha.semana={...semanas[i]};render();mostra('ficha');$('fn').focus()}
+
+/* ---------- ficha ---------- */
+function aplicaModo(){
+ document.body.classList.toggle('ro',ro());
+ document.querySelectorAll('input[name=par]').forEach(r=>r.disabled=ro());$('obs').disabled=ro();
+}
+function render(){
+ aplicaModo();
+ $('obs').value=ficha.observacao||'';
+ document.querySelectorAll('input[name=par]').forEach(r=>r.checked=(+r.value===(ficha.parcelas||1)));
+ $('titulo').textContent=ficha.id?'Ficha nº '+ficha.id:'Nova ficha';
+ $('linhas').innerHTML='';ficha.pessoas.forEach(addLinha);recalc();rodape();
+}
+function waLink(){const d=(cfg.whatsapp||'').replace(/\D/g,'');return 'https://wa.me/'+(d.length<=11?'55'+d:d)}
+function rodape(){
+ const s=ficha.semana;
+ $('semtxt').innerHTML=s?`${esc(s.nome)} — <b>${dmy(s.inicio)} a ${dmy(s.fim)}</b> (${s.diarias} diárias${s.obs?' - '+esc(s.obs):''})`:'(escolha a semana)';
+ $('refeicao').innerHTML=(s&&+s.percentual>=100?'<div><span class="badge ok">Alimentação inclusa: café da manhã, almoço e jantar</span></div>':'')+'<div><span class="badge meio">Toda e qualquer reserva pode ser paga em no <b>MÁXIMO 2X</b> no PIX</span></div>';
+ $('cabEnt').textContent=cfg.entidade||'Colônia de Férias';$('cabTemp').textContent='Temporada '+(cfg.temporada||'');
+ $('cabNum').textContent=ficha.id?'Ficha nº '+ficha.id:'Ficha de reserva';$('cabData').textContent='Emitida em '+new Date().toLocaleDateString('pt-BR');
+ const regras=(cfg.regras_pagamento||'').split('\n').filter(x=>x.trim());
+ $('pgto').innerHTML=`<h4>Informações de pagamento</h4><p class="pixlinha">CHAVE PIX: <b>${esc(cfg.pix)}</b></p><div class="pix"><div><small>Banco</small><b>${esc(cfg.banco)}</b></div><div><small>Agência</small><b>${esc(cfg.agencia)}</b></div><div><small>Conta</small><b>${esc(cfg.conta)}</b></div><div><small>Comprovante no WhatsApp</small><b><a href="${waLink()}" target="_blank">${esc(cfg.whatsapp)}</a></b></div></div><ul>${regras.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>`;
+}
+function doAssociado(){$('fn').value=assoc.nome;$('fi').value=assoc.idade;$('ft').value='Associado';previa()}
+function previa(){
+ const t=tipos.find(x=>x.nome===$('ft').value),s=ficha&&ficha.semana;
+ $('fplbl').textContent=t?` (${t.pernoite_nome||'pernoite'}: ${brl(t.pernoite)}, valor único)`:'';
+ if(!t||!s){$('prev').textContent='';return}
+ const v=r2(t.valor*s.percentual/100),pn=document.querySelector('input[name=fp]:checked').value==='1'?(+t.pernoite||0):0;
+ $('prev').textContent=`Valor/diária ${brl(v)} × ${s.diarias} diárias${pn?' + pernoite '+brl(pn):''} = ${brl(r2(v*s.diarias+pn))}`;
+}
+function adicionar(){
+ if(!ficha.semana)return alert('Escolha a semana primeiro.');
+ const nome=$('fn').value.trim(),tipo=$('ft').value;
+ if(!nome)return alert('Digite o nome completo.');
+ if(!tipo)return alert('Escolha o tipo de reserva.');
+ const p={nome,idade:$('fi').value,tipo,pernoite:document.querySelector('input[name=fp]:checked').value==='1',valor_diaria:0,valor_pernoite:0,manual:false};
+ ficha.pessoas.push(p);addLinha(p);recalc();
+ $('fn').value='';$('fi').value='';document.querySelector('input[name=fp][value="0"]').checked=true;previa();$('fn').focus();
+}
+function addLinha(p){
+ const tr=document.createElement('tr');
+ const ops=tipos.map(t=>`<option>${esc(t.nome)}</option>`).join('')+(p.tipo&&!tipos.some(t=>t.nome===p.tipo)?`<option>${esc(p.tipo)}</option>`:'');
+ tr.innerHTML=`<td><input class="n" size="28"></td><td><input class="i" type="number" min="0" max="120" style="width:60px"></td><td><select class="ct">${ops}</select></td><td><select class="pn"><option value="0">Não</option><option value="1">Sim</option></select><small class="pv"></small></td><td><input class="v" type="number" step="0.01" style="width:90px"></td><td class="t"></td><td class="nao-imp edit"><button class="c m-only" title="valor da tabela" onclick="auto(this)">↺</button> <button class="c" onclick="rem(this)">×</button></td>`;
+ const q=s=>tr.querySelector(s);
+ q('.n').value=p.nome;q('.i').value=p.idade;q('.ct').value=p.tipo;q('.pn').value=p.pernoite?'1':'0';q('.v').value=p.valor_diaria;
+ q('.n').oninput=e=>{p.nome=e.target.value};
+ q('.i').oninput=e=>{p.idade=e.target.value};
+ q('.ct').onchange=e=>{p.tipo=e.target.value;recalc()};
+ q('.pn').onchange=e=>{p.pernoite=e.target.value==='1';recalc()};
+ q('.v').oninput=e=>{p.valor_diaria=+e.target.value;p.manual=true;recalc(e.target)};
+ if(!isMaster())q('.v').readOnly=true;
+ if(ro())tr.querySelectorAll('input,select').forEach(x=>x.disabled=true);
+ tr._p=p;$('linhas').appendChild(tr);
+}
+function auto(b){b.closest('tr')._p.manual=false;recalc()}
+function rem(b){const tr=b.closest('tr');ficha.pessoas=ficha.pessoas.filter(x=>x!==tr._p);tr.remove();recalc()}
+function preco(p,pct){const t=tipos.find(x=>x.nome===p.tipo);return t?r2(+t.valor*pct/100):(+p.valor_diaria||0)}
+function pernoiteVal(p){const t=tipos.find(x=>x.nome===p.tipo);return t?(+t.pernoite||0):(+p.valor_pernoite||0)}
+function recalc(foco){
+ const s=ficha.semana,d=s?+s.diarias:0,pct=s?+s.percentual:100;let soma=0,n=0;
+ document.querySelectorAll('#linhas tr').forEach(tr=>{
+  const p=tr._p,v=tr.querySelector('.v');
+  if(!p.manual||!isMaster())p.valor_diaria=preco(p,pct);
+  p.valor_pernoite=p.pernoite?pernoiteVal(p):0;
+  if(v!==foco)v.value=p.valor_diaria;
+  v.style.background=p.manual?'#fff3cd':'';
+  tr.querySelector('.pv').textContent=p.pernoite?' + '+brl(p.valor_pernoite):'';
+  const t=r2(p.valor_diaria*d+p.valor_pernoite);tr.querySelector('.t').textContent=brl(t);soma+=t;n++;
+ });
+ const tot=r2(soma);
+ $('sub').textContent=`${n} pessoa(s), subtotal ${brl(soma)}`;$('total').textContent=brl(tot);parcelas(tot);previa();
+ $('obsw').classList.toggle('vazio',!$('obs').value.trim());
+}
+function parcelas(tot){
+ const n=+(document.querySelector('input[name=par]:checked')||{value:1}).value;ficha.parcelas=n;
+ if(n===2){const c=Math.round(tot*100),a=Math.ceil(c/2),b=c-a;$('parc').textContent=a===b?`Pagamento em 2x no Pix: 2 parcelas de ${brl(a/100)}`:`Pagamento em 2x no Pix: parcelas de ${brl(a/100)} e ${brl(b/100)}`}
+ else $('parc').textContent=tot>0?'Pagamento à vista, em 1x no Pix':'';
+}
+async function salvar(){
+ if(!ficha.semana)return alert('Escolha a semana.');
+ if(!ficha.pessoas.length)return alert('Adicione pelo menos uma pessoa.');
+ const r=await api('/api/ficha',{id:ficha.id,associado_id:assoc.id,semana:ficha.semana,observacao:$('obs').value,parcelas:ficha.parcelas||1,pessoas:ficha.pessoas});
+ ficha=await api('/api/ficha?id='+r.id);render();
+ pintaAntigas((await api('/api/associado?id='+assoc.id)).fichas);
+ alert('Ficha nº '+r.id+' salva. Total: '+brl(r.total));
+}
+async function excluir(){
+ if(!ficha.id)return alert('Esta ficha ainda não foi salva.');
+ if(!confirm('Excluir a ficha nº '+ficha.id+'?'))return;
+ await api('/api/ficha/excluir',{id:ficha.id});abrir(assoc.id);
+}
+
+/* ---------- lista de fichas (só administradores) ---------- */
+async function lista(){
+ const r=await api('/api/fichas'),g={};
+ r.forEach(f=>{const x=g[f.semana_nome]??={n:0,p:0,t:0};x.n++;x.p+=f.pessoas;x.t+=f.total});
+ $('resumo').innerHTML='<table><tr><th>Semana</th><th>Fichas</th><th>Pessoas</th><th>Total</th></tr>'+Object.entries(g).map(([k,x])=>`<tr><td>${esc(k)}</td><td>${x.n}</td><td>${x.p}</td><td>${brl(x.t)}</td></tr>`).join('')+'</table>';
+ $('todas').innerHTML='<table><tr><th>Nº</th><th>Data</th><th>Criada por</th><th>Associado</th><th>Semana</th><th>Pessoas</th><th>Total</th><th></th></tr>'+r.map(f=>`<tr><td>${f.id}</td><td>${esc((f.criado_em||'').slice(0,10).split('-').reverse().join('/'))}</td><td>${esc(f.criado_por||'')}</td><td>${esc(f.nome)}</td><td>${esc(f.semana_nome)}</td><td>${f.pessoas}</td><td>${brl(f.total)}</td><td><button class="c" onclick="abrirFicha(${f.id})">Abrir</button></td></tr>`).join('')+'</table>';
+ mostra('lista');
+}
+async function exportar(){
+ const r=await fetch('/api/exportar',{headers:{'X-Token':token}});
+ if(!r.ok)throw new Error('Não foi possível exportar.');
+ const a=document.createElement('a');a.href=URL.createObjectURL(await r.blob());
+ a.download='fichas_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+
+/* ---------- configuração (só administradores) ---------- */
+function tipoLinha(t){return `<tr><td><input value="${esc(t.nome)}" size="20"></td><td><input type="number" step="0.01" value="${t.valor}" style="width:90px"></td><td><input type="number" step="0.01" value="${t.pernoite||0}" style="width:90px"></td><td><input value="${esc(t.pernoite_nome||'')}" size="22"></td><td><button class="c" onclick="this.closest('tr').remove()">×</button></td></tr>`}
+function semLinha(s){return `<tr><td><select>${MESES.map(m=>`<option ${m===s.mes?'selected':''}>${m}</option>`).join('')}</select></td><td><input value="${esc(s.nome)}" size="18"></td><td><input type="date" value="${s.inicio}"></td><td><input type="date" value="${s.fim}"></td><td><input type="number" value="${s.diarias}" style="width:60px"></td><td><input type="number" value="${s.percentual}" style="width:60px"></td><td><input value="${esc(s.obs)}" size="16"></td><td><button class="c" onclick="this.closest('tr').remove()">×</button></td></tr>`}
+function cfgRender(){
+ $('c_temporada').value=cfg.temporada||'';$('c_entidade').value=cfg.entidade||'';$('c_pix').value=cfg.pix||'';
+ $('c_whatsapp').value=cfg.whatsapp||'';$('c_banco').value=cfg.banco||'';$('c_agencia').value=cfg.agencia||'';
+ $('c_conta').value=cfg.conta||'';$('c_regras').value=cfg.regras_pagamento||'';
+ $('cfgtipos').innerHTML=tipos.map(tipoLinha).join('');
+ $('cfgsem').innerHTML=semanas.map(semLinha).join('');
+ $('ft').innerHTML='<option value="">— tipo de reserva —</option>'+tipos.map(t=>`<option>${esc(t.nome)}</option>`).join('');
+ $('subtit').textContent='Temporada '+(cfg.temporada||'');
+}
+function addTipo(){$('cfgtipos').insertAdjacentHTML('beforeend',tipoLinha({nome:'',valor:0}))}
+function addSem(){$('cfgsem').insertAdjacentHTML('beforeend',semLinha({mes:MESES[0],nome:'',inicio:'',fim:'',diarias:6,percentual:100,obs:''}))}
+async function salvaCfg(){
+ const c={temporada:$('c_temporada').value,entidade:$('c_entidade').value,pix:$('c_pix').value,whatsapp:$('c_whatsapp').value,banco:$('c_banco').value,agencia:$('c_agencia').value,conta:$('c_conta').value,regras_pagamento:$('c_regras').value};
+ const t=[...$('cfgtipos').querySelectorAll('tr')].map(tr=>{const i=tr.querySelectorAll('input');const n=k=>+String(i[k].value).replace(',','.')||0;return{nome:i[0].value,valor:n(1),pernoite:n(2),pernoite_nome:i[3].value}});
+ const s=[...$('cfgsem').querySelectorAll('tr')].map(tr=>{const i=tr.querySelectorAll('input');return{mes:tr.querySelector('select').value,nome:i[0].value,inicio:i[1].value,fim:i[2].value,diarias:+i[3].value,percentual:+i[4].value,obs:i[5].value}});
+ await api('/api/config',{config:c,semanas:s,tipos:t});await carrega();alert('Configuração salva.');
+}
+async function carrega(){const r=await api('/api/config');cfg=r.config;semanas=r.semanas;tipos=r.tipos;cfgRender()}
+mostra('login');$('lcpf').focus();
+</script></body></html>
